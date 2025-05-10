@@ -14,9 +14,8 @@ const User = Schema('User', {
 export class UserRepository {
   static async create({ username, password }) {
     userSchema.parse({ username, password });
-
     const user = User.findOne({ username });
-    if (user) throw new Error('Username already exists');
+    if (user) throw new Error('{"message":"Username already exists"}');
     const id = crypto.randomUUID();
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
@@ -32,12 +31,13 @@ export class UserRepository {
     userSchema.parse({ username, password });
 
     const user = User.findOne({ username });
-    if (!user) throw new Error('Username does not exist');
+    if (!user) throw new Error('{"message":"Username does not exist"}');
 
     const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) throw new Error('Password is incorrect');
+    if (!isValid) throw new Error('{"message":"Password is incorrect"}');
 
     const { password: _, ...publicUser } = user;
     return publicUser;
   }
 }
+

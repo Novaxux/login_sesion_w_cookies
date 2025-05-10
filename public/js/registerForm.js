@@ -10,4 +10,4 @@ export const registerForm = () => {
         <button type="submit">Send</button>
         <button type="button" id="closeDialog">Cancel</button>
     </form>`;
-};
+  };

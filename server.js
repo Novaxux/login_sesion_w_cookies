@@ -4,8 +4,10 @@ import bodyParser from 'body-parser';
 import { bodyErrorHandling } from './middleware/bodyErrorHandling.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
+import morgan from 'morgan';
 
 const app = express();
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());

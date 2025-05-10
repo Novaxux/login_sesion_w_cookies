@@ -1,10 +1,8 @@
 import { UserRepository } from '../models/user.repository.js';
 import { SECRET_JWT_KEY } from '../config.js';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 const getHomePage = (req, res) => {
-  const { user } = req.session;
-  if (user) return res.sendFile(process.cwd() + '/views/protected.html');
   return res.sendFile(process.cwd() + '/views/index.html');
 };
 
@@ -25,7 +23,7 @@ const loginUser = async (req, res) => {
         sameSite: 'strict',
         maxAge: 1000 * 60 * 60,
       })
-      .send({ user, token });
+      .send({ user });
   } catch (error) {
     res.status(401).send(error.message);
   }
@@ -42,8 +40,7 @@ const registerUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-  res.clearCookie('access_token');
-  res.redirect('/');
+  res.clearCookie('access_token').json({ message: 'logout succesfull' });
 };
 
 const getProtectedPage = (req, res) => {
@@ -52,4 +49,19 @@ const getProtectedPage = (req, res) => {
   res.sendFile(process.cwd() + '/views/protected.html');
 };
 
-export { getHomePage, loginUser, registerUser, logoutUser, getProtectedPage };
+const validateSession = (req, res) => {
+  if (req.session.user) {
+    return res.status(200).json({ valid: true, user: req.session.user });
+  } else {
+    return res.status(401).json({ valid: false, message: 'Not authenticated' });
+  }
+};
+
+export {
+  getHomePage,
+  loginUser,
+  registerUser,
+  logoutUser,
+  getProtectedPage,
+  validateSession,
+};
