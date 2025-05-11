@@ -20,7 +20,7 @@ const loginUser = async (req, res) => {
     res
       .cookie('access_token', token, {
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'Strict',
         maxAge: 1000 * 60 * 60,
       })
       .send({ user });
@@ -30,7 +30,7 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const {  username, password } = req.body;
   try {
     const id = await UserRepository.create({ username, password });
     res.send({ id });
@@ -43,11 +43,6 @@ const logoutUser = (req, res) => {
   res.clearCookie('access_token').json({ message: 'logout succesfull' });
 };
 
-const getProtectedPage = (req, res) => {
-  const { user } = req.session;
-  if (!user) return res.send('Acces not authorized');
-  res.sendFile(process.cwd() + '/views/protected.html');
-};
 
 const validateSession = (req, res) => {
   if (req.session.user) {
@@ -62,6 +57,5 @@ export {
   loginUser,
   registerUser,
   logoutUser,
-  getProtectedPage,
   validateSession,
 };
