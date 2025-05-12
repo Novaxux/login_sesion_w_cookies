@@ -7,7 +7,7 @@ const verifyCookie = (req, res, next) => {
   try {
     const data = jwt.verify(token, SECRET_JWT_KEY);
     req.session.user = data;
-  } catch (error) {
+  } catch {
     req.session.user = null;
     return res.status(401).json({ valid: false, message: 'Not authenticated' });
   }

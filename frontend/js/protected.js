@@ -1,4 +1,4 @@
-import { AuthRequest } from './apiAuthReq.js';
+import AuthRequest from './apiAuthReq.js';
 
 const btnLogout = document.getElementById('btnLogout');
 const message = document.getElementById('message');
@@ -6,8 +6,8 @@ const message = document.getElementById('message');
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     await AuthRequest.validateSession();
-  } catch (error) {
-      window.location.href = '../views/index.html';
+  } catch {
+    window.location.href = '../views/index.html';
   }
 });
 

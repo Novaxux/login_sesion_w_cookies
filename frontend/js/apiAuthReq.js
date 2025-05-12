@@ -1,6 +1,11 @@
-export class AuthRequest {
-  static loginUser = async ({ username, password }) => {
-    const response = await fetch('http://192.168.50.167:3002/login', {
+class AuthRequest {
+  constructor(ip = '127.0.0.1', port = 3000) {
+    this.ip = ip;
+    this.port = port;
+    this.baseUrl = `http://${this.ip}:${port}/auth`;
+  }
+  loginUser = async ({ username, password }) => {
+    const response = await fetch(this.baseUrl + '/login', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
@@ -18,8 +23,8 @@ export class AuthRequest {
     return data;
   };
 
-  static validateSession = async () => {
-    const response = await fetch('http://192.168.50.167:3002/validate', {
+  validateSession = async () => {
+    const response = await fetch(this.baseUrl + '/validate', {
       credentials: 'include',
     });
     const data = await response.json();
@@ -29,8 +34,8 @@ export class AuthRequest {
     return data;
   };
 
-  static logout = async () => {
-    const response = await fetch('http://192.168.50.167:3002/logout', {
+  logout = async () => {
+    const response = await fetch(this.baseUrl + '/logout', {
       method: 'POST',
       credentials: 'include',
     });
@@ -41,8 +46,8 @@ export class AuthRequest {
     return data;
   };
 
-  static signup = async ({ username, password }) => {
-    const response = await fetch('http://192.168.50.167:3002/signup', {
+  signup = async ({ username, password }) => {
+    const response = await fetch(this.baseUrl + '/signup', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
@@ -60,3 +65,5 @@ export class AuthRequest {
     return data;
   };
 }
+const authRequest = new AuthRequest('192.168.50.167', 3002);
+export default authRequest 

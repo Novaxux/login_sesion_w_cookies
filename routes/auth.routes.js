@@ -4,8 +4,7 @@ import {
   loginUser,
   registerUser,
   logoutUser,
-  // getProtectedPage,
-  validateSession,
+   validateSession,
 } from '../controllers/auth.controller.js';
 import { verifyCookie } from '../middleware/verifyCookie.js';
 

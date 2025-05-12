@@ -18,7 +18,7 @@ app.use(
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(authRoutes);
+app.use('/auth',authRoutes);
 app.use(bodyErrorHandling);
 
 app.listen(PORT, IP, () => console.log(`iniciado en http://${IP}:${PORT}`));
