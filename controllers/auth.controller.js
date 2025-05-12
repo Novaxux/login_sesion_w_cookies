@@ -45,11 +45,7 @@ const logoutUser = (req, res) => {
 
 
 const validateSession = (req, res) => {
-  if (req.session.user) {
     return res.status(200).json({ valid: true, user: req.session.user });
-  } else {
-    return res.status(401).json({ valid: false, message: 'Not authenticated' });
-  }
 };
 
 export {

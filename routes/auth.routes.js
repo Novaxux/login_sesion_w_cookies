@@ -16,8 +16,6 @@ router.post('/signup', registerUser);
 router.post('/logout', logoutUser); 
 router.get('/', getHomePage);
 
-router.use(verifyCookie);
-router.get('/validate', validateSession);
-// router.get('/protected', getProtectedPage);
+router.get('/validate',verifyCookie, validateSession);
 
 export default router;
