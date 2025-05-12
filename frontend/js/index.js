@@ -47,7 +47,7 @@ function attachSubmitEvent() {
         AuthRequest.loginUser({ username, password });
         setTimeout(
           () => (window.location.href = '../views/protected.html'),
-          1000
+          2000
         );
       } catch (error) {
         error.message ? alert(error.message) : alert(JSON.stringify(error));

@@ -1,7 +1,7 @@
 import DBLocal from 'db-local';
 const { Schema } = new DBLocal({ path: './db' });
 import userSchema from '../schemas/user.schema.js';
-import crypto from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 import bcrypt from 'bcrypt';
 import { SALT_ROUNDS } from '../config.js';
 
@@ -16,7 +16,7 @@ export class UserRepository {
     userSchema.parse({ username, password });
     const user = User.findOne({ username });
     if (user) throw new Error('{"message":"Username already exists"}');
-    const id = crypto.randomUUID();
+    const id = randomUUID();
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
     User.create({
@@ -40,4 +40,3 @@ export class UserRepository {
     return publicUser;
   }
 }
-
